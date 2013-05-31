@@ -29,6 +29,7 @@ public class Execution extends Applet {
 		a = new Action();
 		a.init();
 		addMouseMotionListener(a);
+		addMouseListener(a);
 		Timer painter = new Timer();
 		TimerTask toPaint = new TimerTask() {
 			@Override
@@ -53,7 +54,7 @@ public class Execution extends Applet {
 				brickColor = new Color(255, 60, 0);
 				break;
 			case 0:
-				brickColor = new Color(255, 20, 0);
+				brickColor = new Color(235, 20, 0);
 				break;
 			default:
 				brickColor = new Color(0, 160, 255);
@@ -66,6 +67,10 @@ public class Execution extends Applet {
 		b.setColor(new Color(35, 35, 35));
 		b.fillRect(a.ball.x, a.ball.y, a.ball.width, a.ball.height);
 		b.fillRect(a.paddle.x, a.paddle.y, a.paddle.width, a.paddle.height);
+		b.setFont(new Font("SansSerif", 1, 30));
+		if(!a.start){b.drawString("Click to start!", 5, a.height-20);}
+		if(a.lost || a.won){b.drawString("Click to reset", 5, a.height-20);	}
+		
 		g.drawImage(bufferImage, 0, 0, Color.BLACK, this);
 	}
 

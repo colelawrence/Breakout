@@ -2,10 +2,11 @@ package cole.breakout;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class Action implements MouseMotionListener {
+public class Action implements MouseMotionListener, MouseListener {
 	Rectangle ball = new Rectangle(0, 0, 20, 20);
 	Rectangle paddle = new Rectangle(0, 0, 100, 20);
 	ArrayList<Rectangle> bricks = new ArrayList<Rectangle>();
@@ -20,6 +21,7 @@ public class Action implements MouseMotionListener {
 	int paddleX = 100;
 	int paddleWidth = 100;
 	boolean lost = false;
+	boolean start = false;
 	boolean won = false;
 	final int side = ball.width;
 
@@ -32,11 +34,12 @@ public class Action implements MouseMotionListener {
 		locY = (height - side) / 2;
 		dX = Math.random() * 10 + 3;
 		dY = Math.random() * 10 + 3;
+		ball.setLocation((int) (locX), (int) (locY));
 	}
 
 	public void act() {
 		paddle.x = paddleX;
-		if (won || lost)
+		if (won || lost || !start)
 			return;
 
 		int cX1, cX2, cX3;
@@ -133,5 +136,41 @@ public class Action implements MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		paddleX = e.getX() - paddleWidth / 2;
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.print("Started");
+		if (won || lost) {
+			init();
+			start=false;
+			won=false;
+			lost=false;
+		} else {
+			start=true;
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
